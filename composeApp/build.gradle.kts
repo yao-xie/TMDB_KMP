@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
 //    cause issue: "Using 'compilerOptions(KotlinCommonCompilerOptions.() -> Unit): Unit' is an error. Kotlin target level compiler options DSL is not available in this release!"
-//    alias(libs.plugins.sqldelight)
+    alias(libs.plugins.sqldelight)
 }
 
 kotlin {
@@ -116,5 +116,15 @@ android {
     }
     dependencies {
         debugImplementation(compose.uiTooling)
+    }
+}
+
+// Sqldelight:
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("org.yao.tmdb.data")
+            dialect("app.cash.sqldelight:sqlite-3-24-dialect:2.0.2") // Specify 3.24 to resolve error for 'ON CONFLICT' clause
+        }
     }
 }
